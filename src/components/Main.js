@@ -1,22 +1,57 @@
-require('normalize.css/normalize.css');
-require('styles/App.css');
-
 import React from 'react';
+import PropTypes from 'prop-types';
+import {Menu, Icon} from 'antd';
+import CountUp from 'react-countup';
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 
-let yeomanImage = require('../images/yeoman.png');
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      current: 'mail'
+    }
+  }
 
-class AppComponent extends React.Component {
+  handleClick(e) {
+    console.log('click ', e);
+    this.setState({
+      current: e.key
+    });
+  }
+
   render() {
     return (
-      <div className="index">
-        <img src={yeomanImage} alt="Yeoman Generator" />
-        <div className="notice">Please edit <code>src/components/Main.js</code> to get started!</div>
+      <div>
+        <CountUp start={0} end={160526} />
+        <Menu onClick={this.handleClick}
+              selectedKeys={[this.state.current]}
+              mode="horizontal">
+          <Menu.Item key="mail">
+            <Icon type="mail"/>Navigation One
+          </Menu.Item>
+          <Menu.Item key="app" disabled>
+            <Icon type="appstore"/>Navigation Two
+          </Menu.Item>
+          <SubMenu title={<span><Icon type="setting"/>Navigation Three - Submenu</span>}>
+            <MenuItemGroup title="Item 1">
+              <Menu.Item key="setting:1">Option 1</Menu.Item>
+              <Menu.Item key="setting:2">Option 2</Menu.Item>
+            </MenuItemGroup>
+            <MenuItemGroup title="Item 2">
+              <Menu.Item key="setting:3">Option 3</Menu.Item>
+              <Menu.Item key="setting:4">Option 4</Menu.Item>
+            </MenuItemGroup>
+          </SubMenu>
+          <Menu.Item key="alipay">
+            <a href="http://www.alipay.com/" target="_blank" rel="noopener noreferrer">Navigation Four - Link</a>
+          </Menu.Item>
+        </Menu>
       </div>
     );
   }
 }
 
-AppComponent.defaultProps = {
-};
+App.propTypes = {};
 
-export default AppComponent;
+export default App;
